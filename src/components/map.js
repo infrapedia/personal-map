@@ -1,5 +1,4 @@
 import mapConfig from '../config/mapConfig';
-
 const mapboxgl = require('mapbox-gl');
 
 
