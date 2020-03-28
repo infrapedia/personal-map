@@ -5,7 +5,10 @@ const mapConfig = {
     dark: 'mapbox://styles/mapbox/dark-v10'
   },
   zoom: 1.75,
-  center: [-34.292, 27.57]
+  center: [-34.292, 27.57],
+  data: {
+    sources: []
+  }
 }
 
 export default mapConfig

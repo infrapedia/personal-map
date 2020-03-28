@@ -18,8 +18,8 @@ function InitApp() {
   const mapContainerID = 'map'
 
   createMapWrapper(mapContainerID)
-  const map = new MapViewer({ wrapper: mapContainerID })
-  map.init()
+  const map = new MapViewer({ wrapper: mapContainerID, layers: [] })
+  map.loadAll()
   console.log(map)
 }
 
