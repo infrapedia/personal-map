@@ -11,9 +11,12 @@ const webpackHotMiddleware = require('webpack-hot-middleware')
 const HTML_FILE = path.join(__dirname, 'index.html')
 require('dotenv').config()
 
-app.use(webpackHotMiddleware(compiler))
+const port = process.env.PORT || 8000 || 8081 || 8082
+const HOST_PORT = process.env.HOST + ':' + port
 
+app.use(webpackHotMiddleware(compiler))
 app.use(express.static(__dirname))
+
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 }))
@@ -29,6 +32,6 @@ app.get('*', (req, res, next) => {
   })
 })
 
-app.listen(3000, function() {
-  console.log('\nApp listening on: ' + `${process.env.HOST_PORT}`.underline.green)
+app.listen(port, function() {
+  console.log('\nApp listening on: ' + `${HOST_PORT}`.underline.green)
 })
