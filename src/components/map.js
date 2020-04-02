@@ -19,7 +19,7 @@ class MainMap {
       container: this.wrapper,
       zoom: mapConfig.zoom,
       center: mapConfig.center,
-      style: mapConfig.style.default
+      style: mapConfig.style.default,
     })
 
     this.map = map
@@ -31,7 +31,7 @@ class MainMap {
    */
   initMapLayers(map) {
     let vm = this
-    map.on('load', function() {
+    map.on('load', function () {
       vm.addMapSources(map)
     })
     return map

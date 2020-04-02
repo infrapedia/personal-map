@@ -9,15 +9,17 @@ class Drawer {
 
   toggleVisibility() {
     this.visible
-      ? this.wrapper.style.display = 'none'
-      : this.wrapper.style.display = 'block'
+      ? (this.wrapper.style.display = 'none')
+      : (this.wrapper.style.display = 'block')
   }
 
   init() {
     this.createElemnt(
       createElement('div', {
-      class: 'drawer', style: { display: 'none' }
-    }))
+        class: 'drawer',
+        style: { display: 'none' },
+      })
+    )
   }
 }
 

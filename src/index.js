@@ -1,8 +1,6 @@
-import './assets/main.css'
-import 'normalize.css'
 import App from './app'
 
-if (typeof(module.hot) !== 'undefined') {
+if (typeof module.hot !== 'undefined') {
   module.hot.accept() // eslint-disable-line no-undef
 }
 
@@ -13,4 +11,4 @@ function initApp() {
 
 window.onload = (function () {
   return initApp()
-}())
+})()

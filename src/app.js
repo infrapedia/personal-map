@@ -26,19 +26,21 @@ class App {
   }
 
   initDrawer() {
-    const wrapper = this.createElemnt(createElement('div', {
-      class: 'drawer-wrapper',
-      style: {
-        position: 'absolute',
-        left: '2rem',
-        top: 0
-      }
-    }))
+    const wrapper = this.createElemnt(
+      createElement('div', {
+        class: 'drawer-wrapper',
+        style: {
+          position: 'absolute',
+          left: '2rem',
+          top: 0,
+        },
+      })
+    )
 
     const drawer = new Drawer({
       wrapper,
       visible: false,
-      createElemnt: this.createElemnt
+      createElemnt: this.createElemnt,
     })
 
     drawer.init()
