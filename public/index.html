@@ -18,6 +18,26 @@
         enabled. Please enable it to continue.</strong
       >
     </noscript>
-    <div id="app"></div>
+    <div id="app">
+      <button class="no-border absolute cursor-pointer" id="drawer-toggler">
+        <i class="fas fa-caret-down md-icon transition-all-variant"></i>
+      </button>
+      <div class="drawer-wrapper transition-all-variant" id="Drawer">
+        <div class="relative drawer w-fit-full h-fit-ful">
+          <header class="flex row justify-content-space-between">
+            <h1 class="title"></h1>
+            <button
+              class="no-border sm-icon cursor-pointer"
+              id="btnDrawerClose"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </header>
+          <div class="drawer__body w-fit-full h-fit-full">
+            <div class="collapse-item"></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

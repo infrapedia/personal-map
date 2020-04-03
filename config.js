@@ -25,7 +25,6 @@ const config = {
   JSOUTPUT: jsOutput,
   OUTPUT: path.resolve(__dirname, 'public'),
   PORT: portNumber,
-  STYLELINTRC: path.resolve(__dirname, '.stylelintrc'),
 }
 
 // Export config.

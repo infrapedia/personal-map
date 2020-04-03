@@ -3,21 +3,12 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import StyleLintPlugin from 'stylelint-webpack-plugin'
 
 // Import Configuration.
 import config from '../config'
 const Dotenv = require('dotenv-webpack')
 
-const {
-  CSSOUTPUT,
-  DIST,
-  ENTRY,
-  GITIGNORE,
-  JSOUTPUT,
-  OUTPUT,
-  STYLELINTRC,
-} = config
+const { CSSOUTPUT, DIST, ENTRY, JSOUTPUT, OUTPUT } = config
 
 /**
  * Default modules loader for assets.
@@ -88,15 +79,6 @@ const plugins = [
       collapseWhitespace: true,
       removeComments: true,
     },
-  }),
-  new StyleLintPlugin({
-    configFile: STYLELINTRC,
-    context: ENTRY,
-    emitErrors: true,
-    failOnError: false,
-    files: '**/**/*.css',
-    ignorePath: GITIGNORE,
-    quiet: false,
   }),
 ]
 

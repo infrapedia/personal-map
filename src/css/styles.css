@@ -1,8 +1,52 @@
 @import 'normalize.css';
+@import './components/drawer.css';
+@import './helpers/atomic-classes.css';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+:root {
+  --white: white;
+  --white-partial: #fafafa;
+  --white-partial-variation: #f1f1f1;
+  --white-hsl: hsla(0, 0%, 100%, 0.7);
+  --blue: #2196f3;
+  --dark-blue: #255fb9;
+  --dark-blue-variation: #1e419a;
+  --light-charcoal: #424242;
+  --dark-charcoal: #303030;
+  --gray: #616161;
+  --grey-ligthen: #e0e0e0;
+  --light-yellow: #f7dc82;
+  --dark-yellow: #f3c52c;
+  --berry: #b10f0f;
+
+  --cubic-transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --regular-transition: 320ms ease;
+  --light-hover: lighten(rgba(0, 0, 0, 0.2), 12%);
+  --box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+  --break-xs: 599px;
+  --break-sm: 959px;
+  --break-md: 1263px;
+  --break-lg: 1903px;
+  --break-xl: 1999px;
+}
+
+html,
+body {
+  font-size: 14px;
+  line-height: 1.8;
+  overflow: hidden;
+}
+
+h1,
+p {
+  margin: 0;
+}
 
 #app {
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
   background-color: antiquewhite;
 }
 

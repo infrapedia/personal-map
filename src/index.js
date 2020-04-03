@@ -5,10 +5,9 @@ if (typeof module.hot !== 'undefined') {
 }
 
 function initApp() {
-  const app = new App({ wrapper: document.getElementById('app') })
-  app.init()
+  new App({ wrapper: document.getElementById('app') }).init()
 }
 
 window.onload = (function () {
-  return initApp()
+  return initApp
 })()

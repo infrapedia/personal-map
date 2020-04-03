@@ -19,31 +19,14 @@ class App {
     let map
 
     this.createElemnt(createElement('div', { id }))
-    map = new Map({ wrapper: id, layers: [] })
-    map.loadAll()
+    map = new Map({ wrapper: id, layers: [] }).loadAll()
 
     return map
   }
 
   initDrawer() {
-    const wrapper = this.createElemnt(
-      createElement('div', {
-        class: 'drawer-wrapper',
-        style: {
-          position: 'absolute',
-          left: '2rem',
-          top: 0,
-        },
-      })
-    )
-
-    const drawer = new Drawer({
-      wrapper,
-      visible: false,
-      createElemnt: this.createElemnt,
-    })
-
-    drawer.init()
+    const drawer = new Drawer({ wrapperID: 'Drawer' }).init()
+    drawer.setDrawerData({ title: 'Testing' })
     return drawer
   }
 

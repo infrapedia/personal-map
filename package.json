@@ -4,9 +4,8 @@
   "scripts": {
     "dev": "webpack-dev-server -d --progress --color --open --config config/webpack.dev.babel.js",
     "build": "webpack -p --progress --config config/webpack.prod.babel.js",
-    "lint:css": "stylelint --ignore-path .gitignore \"src/**/*.css\"",
     "lint:js": "eslint --ignore-path .gitignore src/**/*.js",
-    "lint:fix": "yarn lint:css --fix && yarn lint:js --fix",
+    "lint:fix": "yarn lint:js --fix",
     "test": "jest src",
     "test:watch": "yarn jest src --watch --notify"
   },
@@ -16,6 +15,7 @@
     }
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "core-js": "^3.6.4",
     "dotenv": "^8.2.0",
     "mapbox-gl": "^1.9.0",
@@ -63,7 +63,6 @@
     "raw-loader": "^4.0.0",
     "stylelint": "^13.2.1",
     "stylelint-config-standard": "^20.0.0",
-    "stylelint-webpack-plugin": "^1.2.3",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.0.0",
     "webpack": "^4.42.1",
