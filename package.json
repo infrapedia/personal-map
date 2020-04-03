@@ -61,8 +61,6 @@
     "postcss-url": "^8.0.0",
     "prettier": "^2.0.2",
     "raw-loader": "^4.0.0",
-    "stylelint": "^13.2.1",
-    "stylelint-config-standard": "^20.0.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.0.0",
     "webpack": "^4.42.1",
