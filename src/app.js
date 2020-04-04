@@ -19,13 +19,13 @@ class App {
     let map
 
     this.createElemnt(createElement('div', { id }))
-    map = new Map({ wrapper: id, layers: [] }).loadAll()
+    map = new Map({ wrapper: id, layers: [] }).setup()
 
     return map
   }
 
   initDrawer() {
-    const drawer = new Drawer({ wrapperID: 'Drawer' }).init()
+    const drawer = new Drawer({ wrapperID: 'Drawer' }).setup()
     drawer.setDrawerData({ title: 'Testing' })
     return drawer
   }

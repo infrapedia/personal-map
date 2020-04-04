@@ -8,7 +8,7 @@ class MainMap {
     this.map = undefined
   }
 
-  loadAll() {
+  setup() {
     return this.initMapLayers(this.initMap())
   }
 

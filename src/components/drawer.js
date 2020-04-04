@@ -39,7 +39,7 @@ class Drawer {
     })
   }
 
-  init() {
+  setup() {
     this.$self = document.getElementById(this.wrapperID)
     this.__$btnToggler = document.getElementById('drawer-toggler')
     this.attachEvents()
