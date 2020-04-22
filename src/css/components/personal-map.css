@@ -1,0 +1,82 @@
+#bottomRightButtons{
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  z-index: 2;
+}
+#topLeftButtons{
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+}
+
+#loader{
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99999;
+  background: #FFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.legbg{
+  padding-left: 20px;
+  padding-bottom: 5px;
+  cursor: pointer !important;
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+
+.point{
+  width: 13px;
+  height: 13px;
+  border-radius: 100%;
+  border: 1px solid #666 !important;
+  float: left;
+  margin-right: 5px;
+  margin-top: 6px !important;
+  cursor: pointer !important;
+}
+.polygon{
+  width: 13px;
+  height: 13px;
+  border: 1px solid #666 !important;
+  float: left;
+  margin-right: 5px;
+  margin-top: 6px !important;
+  cursor: pointer !important;
+}
+.line{
+  width: 13px;
+  height: 4px;
+  margin-top: 10px !important;
+  border: 1px solid #666 !important;
+  float: left;
+  margin-right: 5px;
+  margin-top: 5px;
+  cursor: pointer !important;
+}
+
+.legendFont{
+  color: #52555B;
+  font-family: monospace;
+  font-size: 14px;
+  cursor: pointer !important;
+}
+
+.legendFontPassive{
+  color: #f44336;
+  font-family: monospace;
+  font-size: 14px;
+  cursor: pointer !important;
+  text-decoration: line-through
+}

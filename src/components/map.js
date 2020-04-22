@@ -1,4 +1,5 @@
 import mapConfig from '../config/mapConfig'
+import GL from '../lib/GL'
 const mapboxgl = require('mapbox-gl')
 
 class MainMap {
@@ -13,13 +14,25 @@ class MainMap {
   }
 
   initMap() {
+    window.mapboxgl=mapboxgl;
     mapboxgl.accessToken = mapConfig.accessToken
+
+    const mapStyle = mapConfig.style.default;
+    if(localStorage.getItem("basemap")!==null){
+      var currentBaseap = localStorage.getItem("basemap");
+      mapStyle = 'mapbox://styles/mapbox/'+currentBaseap;
+    }
+    
 
     const map = new mapboxgl.Map({
       container: this.wrapper,
       zoom: mapConfig.zoom,
       center: mapConfig.center,
-      style: mapConfig.style.default,
+      style: mapStyle,
+      hash:true,
+      pitchWithRotate:true,
+      preserveDrawingBuffer:true,
+      clickTolerance:5,
     })
 
     this.map = map
@@ -32,6 +45,11 @@ class MainMap {
   initMapLayers(map) {
     let vm = this
     map.on('load', function () {
+      GL.setMap(map);
+      GL.addControls();
+      GL.addSource();
+      GL.addLayers();
+      //GL.addEvents();
       vm.addMapSources(map)
     })
     return map

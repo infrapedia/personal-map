@@ -10,6 +10,9 @@
       href="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.css"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+    
   </head>
   <body>
     <noscript>
@@ -19,25 +22,12 @@
       >
     </noscript>
     <div id="app">
-      <button class="no-border absolute cursor-pointer" id="drawer-toggler">
-        <i class="fas fa-caret-down md-icon transition-all-variant"></i>
-      </button>
-      <div class="drawer-wrapper transition-all-variant" id="Drawer">
-        <div class="relative drawer w-fit-full h-fit-ful">
-          <header class="flex row justify-content-space-between">
-            <h1 class="title"></h1>
-            <button
-              class="no-border sm-icon cursor-pointer"
-              id="btnDrawerClose"
-            >
-              <i class="fas fa-times"></i>
-            </button>
-          </header>
-          <div class="drawer__body w-fit-full h-fit-full">
-            <div class="collapse-item"></div>
-          </div>
-        </div>
-      </div>
+      <div id="loader"><div class="spinner-border text-primary" role="status"></div></div>
+
+      <div id="map"></div>
+ 
+      <div id="mylegend"><mylegend></mylegend></div>
+      <div id="myprintmap"><printmap></printmap></div>
     </div>
   </body>
 </html>

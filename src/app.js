@@ -1,12 +1,15 @@
 import createElement from './helpers/createElement'
-import Drawer from './components/drawer'
 import Map from './components/map'
+import GL from './lib/GL';
+import mylegend from './components/legend';
+import myprintmap from './components/printmap';
 
 class App {
+  debugger;
   constructor({ wrapper }) {
-    this.drawer = undefined
     this.wrapper = wrapper
     this.map = undefined
+    this.printmap = undefined;
   }
 
   createElemnt(el) {
@@ -19,20 +22,15 @@ class App {
     let map
 
     this.createElemnt(createElement('div', { id }))
-    map = new Map({ wrapper: id, layers: [] }).setup()
-
+    map = new Map({ wrapper: id, layers: [] }).setup();
     return map
   }
 
-  initDrawer() {
-    const drawer = new Drawer({ wrapperID: 'Drawer' }).setup()
-    drawer.setDrawerData({ title: 'Testing' })
-    return drawer
-  }
 
   init() {
-    this.drawer = this.initDrawer()
-    this.map = this.initMap()
+    this.map = this.initMap();
+    mylegend.setup();
+    myprintmap.setup();
     return this
   }
 }
