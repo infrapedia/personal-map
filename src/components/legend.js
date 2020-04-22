@@ -1,3 +1,7 @@
+var Vue = window.Vue;
+var GL = window.GL;
+var MobileDetect = window.MobileDetect;
+var $ = window.$;
 Vue.component('mylegend', {
   data: function () {
     return this.setDefault();
@@ -63,7 +67,7 @@ Vue.component('mylegend', {
         }
       }
       
-      $("#sidebarPanel").modal({
+      $('#sidebarPanel').modal({
         backdrop: false,
         keyboard: false
     });
@@ -71,7 +75,7 @@ Vue.component('mylegend', {
     },
     close: function () {
       this.isOpen=false;
-      $("#sidebarPanel").modal('hide');
+      $('#sidebarPanel').modal('hide');
     },
     setVisible:function(layer){
       layer.active=!layer.active

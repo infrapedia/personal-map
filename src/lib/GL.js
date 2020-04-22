@@ -1,3 +1,8 @@
+var mapboxgl = window.mapboxgl;
+var download = window.download;
+var MobileDetect = window.MobileDetect;
+var $ = window.$;
+
 var GL = {
   dpi : 96,
   subdomain:'',
@@ -68,7 +73,7 @@ GL.styleMaker = {
       paint:obj2
     }
   },
-  threeD:function(sourceId,layerId,obj){
+  threeD:function(sourceId,layerId){
     var obj2 = {
       id: layerId,
       type: 'fill-extrusion',
@@ -84,9 +89,10 @@ GL.styleMaker = {
     return obj2
   },
   default:function(type,sourceId,layerId){
+    var style = {};
     switch(type){
       case 'line':{
-        return {
+        style = {
           id:layerId,
           type: 'line',
           source:sourceId,
@@ -96,11 +102,11 @@ GL.styleMaker = {
             'line-width': 5
           },
           filter: ['==', '$type', 'LineString']
-        }
+        };
         break;
       }
       case 'fill':{
-        return {
+        style = {
           id:layerId,
           type: 'fill',
           source:sourceId,
@@ -109,12 +115,12 @@ GL.styleMaker = {
             'fill-opacity': 0.4
             },
           filter: ['==', '$type', 'Polygon']
-        }
+        };
         break;
       }
       case 'circle':{
         
-        return {
+        style = {
           'id': layerId,
           'type': 'circle',
           'source': sourceId,
@@ -129,15 +135,16 @@ GL.styleMaker = {
           },
           filter: ['==', '$type', 'Point']
         }
-          
-        
+        break;
       }
     }
+    return style;
   },
   label:function(type,id,source,columnName){
+    var style = {};
     switch(type){
       case 'line':{
-        return {
+        style =  {
           id: id,
           source: source,
           type: 'symbol',
@@ -158,7 +165,7 @@ GL.styleMaker = {
         break;
       }
       case 'circle':{
-        return {
+        style =  {
           id: id,
           source: source,
           type: 'symbol',
@@ -178,7 +185,7 @@ GL.styleMaker = {
         break;
       }
       case '3D':{
-        return {
+        style =  {
           id: id,
           source: source,
           type: 'symbol',
@@ -197,7 +204,7 @@ GL.styleMaker = {
         break;
       }
     }
-    
+    return style;
   }
 };
 
@@ -219,7 +226,7 @@ GL.addSource = function(){
         cables:{
           type:'line',
           status:true,
-          columns:["stroke","stroke-width","stroke-opacity"]
+          columns:['stroke','stroke-width','stroke-opacity']
         }
       }
     },
@@ -266,7 +273,7 @@ GL.addSource = function(){
         drawLine:{
           type:'line',
           status:true,
-          columns:["stroke","stroke-width","stroke-opacity"]
+          columns:['stroke','stroke-width','stroke-opacity']
         }
       }
     },
@@ -324,8 +331,7 @@ GL.addLayers = function(){
         var layers = source.layers;
         layers.map(function(layerName){
   
-          if(typeof source.paint[layerName]!=="undefined"){
-            var obj = {};
+          if(typeof source.paint[layerName]!=='undefined'){
             var paint = source.paint[layerName];
             var layerStyle = {};
             if(paint.status){
@@ -351,7 +357,7 @@ GL.addLayers = function(){
             GL.map.on('mousemove', layerStyle.id, function(e) {
               GL.map.getCanvas().style.cursor = 'pointer';
               if (e.features.length) {
-                var html ="<b>"+e.features[0].properties.name+"</b>";
+                var html ='<b>'+e.features[0].properties.name+'</b>';
                 GL.map.getCanvas().style.cursor = 'pointer';
                 GL.popup.setHTML(html);
                 GL.popup.setLngLat(e.lngLat);
@@ -359,18 +365,18 @@ GL.addLayers = function(){
               }
             });
 
-            GL.map.on('mouseleave', layerStyle.id, function(e) {
+            GL.map.on('mouseleave', layerStyle.id, function() {
               GL.map.getCanvas().style.cursor = '';
               GL.popup.remove();
             });
 
-            GL.map.on('click', layerStyle.id, function(e) {
+            GL.map.on('click', layerStyle.id, function() {
               GL.setColor(layerStyle);
             });
 
           }
   
-          if(typeof source.label[layerName]!=="undefined"){
+          if(typeof source.label[layerName]!=='undefined'){
             var label = source.label[layerName];
             if(label.status){
               var style = GL.styleMaker.label(paint.type,layerName+'-label',source.id,label.columnName);
@@ -389,17 +395,17 @@ GL.addLayers = function(){
 GL.getDate=function(){
   var date = new Date(); //date
   var day=date.getDate(); //day
-  if(day<10){day="0"+day;}
+  if(day<10){day='0'+day;}
   var month=date.getMonth()+1; //month
-  if(month<10){month="0"+month;}
+  if(month<10){month='0'+month;}
   var year=date.getFullYear(); //year
 
   var hours=date.getHours(); //hours
-  if(hours<10){hours="0"+hours;}
+  if(hours<10){hours='0'+hours;}
   var min=date.getMinutes(); //min
-  if(min<10){min="0"+min;}
+  if(min<10){min='0'+min;}
   var sec=date.getSeconds(); //sec
-  if(sec<10){sec="0"+sec;}
+  if(sec<10){sec='0'+sec;}
   var fulldate=day+'.'+month+'.'+year+' '+hours+':'+min+':'+sec;
   return fulldate;
 }
@@ -416,7 +422,7 @@ GL.createVirtualCanvas = function(dpi){
 
   var hidden = document.createElement('div');
   hidden.id = 'printMap'
-  hidden.style.visibility="hide";
+  hidden.style.visibility='hide';
   document.body.appendChild(hidden);
   var container = document.createElement('div');
   container.style.width = width+'px';
@@ -480,9 +486,8 @@ GL.addEvents = function(){
     var layerId = item.id;
     GL.map.on('mousemove', layerId, function(e) {
       GL.map.getCanvas().style.cursor = 'pointer';
-        var layer = GL.map.getLayer(layerId);
       if (e.features.length) {
-        var html ="<b>"+name+"</b>";
+        var html ='<b>'+name+'</b>';
         GL.map.getCanvas().style.cursor = 'pointer';
         GL.popup.setHTML(html);
         GL.popup.setLngLat(e.lngLat);
@@ -490,27 +495,17 @@ GL.addEvents = function(){
       }
     });
 
-    GL.map.on('mouseleave', layerId, function(e) {
-      var layer = GL.map.getLayer(layerId);
+    GL.map.on('mouseleave', layerId, function() {
       GL.map.getCanvas().style.cursor = '';
       GL.popup.remove();
     });
 
-    GL.map.on('click', layerId, function(e) {
-      var layer = GL.map.getLayer(layerId);
+    GL.map.on('click', layerId, function() {
       GL.setColor(layerId);
     });
   })
 }
 
-GL.setColor=function(layer){
-  debugger;
-  /*if(layer.type=="line"){
-    GL.map.setPaintProperty(layer.id, 'line-color', '#000000');
-  }*/
-  
-
-};
 
 
 

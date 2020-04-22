@@ -1,3 +1,8 @@
+var Vue = window.Vue;
+var GL = window.GL;
+var MobileDetect = window.MobileDetect;
+var $ = window.$;
+
 Vue.component('printmap', {
   data: function () {
     return this.setDefault();
@@ -30,7 +35,6 @@ Vue.component('printmap', {
       }
     },
     open: function () {
-      debugger;
       var md = new MobileDetect(window.navigator.userAgent,600);
       if(md.phone()==null){
         $('#exampleModal').modal('show');
@@ -43,11 +47,10 @@ Vue.component('printmap', {
     },
     close: function () {
       this.isOpen=false;
-      $("#sidebarPanel").modal('hide');
+      $('#sidebarPanel').modal('hide');
       $('#exampleModal').modal('hide');
     },
     print:function(dpi){
-      debugger;
       GL.printMap(dpi);
       this.close();
     }

@@ -1,6 +1,5 @@
 import createElement from './helpers/createElement'
 import Map from './components/map'
-import GL from './lib/GL';
 import mylegend from './components/legend';
 import myprintmap from './components/printmap';
 

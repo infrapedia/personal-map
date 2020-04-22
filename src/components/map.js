@@ -17,9 +17,9 @@ class MainMap {
     window.mapboxgl=mapboxgl;
     mapboxgl.accessToken = mapConfig.accessToken
 
-    const mapStyle = mapConfig.style.default;
-    if(localStorage.getItem("basemap")!==null){
-      var currentBaseap = localStorage.getItem("basemap");
+    var mapStyle = mapConfig.style.default;
+    if(localStorage.getItem('basemap')!==null){
+      var currentBaseap = localStorage.getItem('basemap');
       mapStyle = 'mapbox://styles/mapbox/'+currentBaseap;
     }
     
