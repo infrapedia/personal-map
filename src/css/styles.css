@@ -1,8 +1,5 @@
 @import 'normalize.css';
-@import 'bootstrap';
-@import './components/animasyon.css';
-@import './components/stylemobil.css';
-@import './components/personal-map.css';
+@import './components/drawer.css';
 @import './helpers/atomic-classes.css';
 @import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -50,7 +47,7 @@ p {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color:#ffffff;
+  background-color: antiquewhite;
 }
 
 #map {
