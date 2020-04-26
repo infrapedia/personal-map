@@ -1,4 +1,5 @@
 import App from './app'
+import 'bootstrap';
 
 if (typeof module.hot !== 'undefined') {
   module.hot.accept() // eslint-disable-line no-undef

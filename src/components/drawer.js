@@ -1,3 +1,5 @@
+import GL from './GL';
+
 class Drawer {
   constructor({ wrapperID }) {
     this.__$btnToggler = undefined
@@ -8,40 +10,31 @@ class Drawer {
     }
   }
 
-  toggleVisibility() {
-    if (this.data.visible) {
-      this.data.visible = false
-      this.$self.classList.remove('active')
-      this.__$btnToggler.classList.remove('hidden')
-    } else {
-      this.data.visible = true
-      this.__$btnToggler.classList.add('hidden')
-      this.$self.classList.add('active')
-    }
-  }
-
-  setDrawerData(data) {
+  setData(data) {
     if (!data) return
 
-    const h1 = document.querySelector(`#${this.wrapperID} header h1`)
-    h1.innerHTML = data.title
   }
 
   attachEvents() {
-    document.getElementById('drawer-toggler').addEventListener('click', e => {
+    document.getElementById('openLegend').addEventListener('click', e => {
       e.stopPropagation()
-      this.toggleVisibility()
+      GL.openLegend(true);
     })
 
-    document.getElementById('btnDrawerClose').addEventListener('click', e => {
+    document.getElementById('modalBackground').addEventListener('click', e => {
       e.stopPropagation()
-      this.toggleVisibility()
+      GL.openLegend(false);
+    })
+
+    document.getElementById('legendCloseButton').addEventListener('click', e => {
+      e.stopPropagation()
+      GL.openLegend(false);
     })
   }
 
   setup() {
     this.$self = document.getElementById(this.wrapperID)
-    this.__$btnToggler = document.getElementById('drawer-toggler')
+    this.__$btnToggler = document.getElementById('openLegend')
     this.attachEvents()
     return this
   }

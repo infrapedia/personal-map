@@ -2,6 +2,9 @@
 @import './components/drawer.css';
 @import './helpers/atomic-classes.css';
 @import '@fortawesome/fontawesome-free/css/all.min.css';
+@import './components/animasyon.css';
+@import './components/stylemobil.css';
+@import './components/personal-map.css';
 
 :root {
   --white: white;

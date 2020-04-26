@@ -1,5 +1,6 @@
 import createElement from './helpers/createElement'
 import Drawer from './components/drawer'
+import Print from './components/print'
 import Map from './components/map'
 
 class App {
@@ -7,6 +8,7 @@ class App {
     this.drawer = undefined
     this.wrapper = wrapper
     this.map = undefined
+    this.print = undefined
   }
 
   createElemnt(el) {
@@ -26,13 +28,20 @@ class App {
 
   initDrawer() {
     const drawer = new Drawer({ wrapperID: 'Drawer' }).setup()
-    drawer.setDrawerData({ title: 'Testing' })
+    drawer.setData({ title: 'Testing' })
     return drawer
+  }
+
+  initPrint() {
+    const print = new Print({ wrapperID: 'Print' }).setup()
+    print.setData({ title: 'Testing' })
+    return print
   }
 
   init() {
     this.drawer = this.initDrawer()
     this.map = this.initMap()
+    this.print = this.initPrint();
     return this
   }
 }

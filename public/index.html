@@ -1,43 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Express and Webpack App</title>
-    <link rel="shortcut icon" href="#" />
-    <link
-      href="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <noscript>
-      <strong
-        >We're sorry but client doesn't work properly without JavaScript
-        enabled. Please enable it to continue.</strong
-      >
-    </noscript>
-    <div id="app">
-      <button class="no-border absolute cursor-pointer" id="drawer-toggler">
-        <i class="fas fa-caret-down md-icon transition-all-variant"></i>
-      </button>
-      <div class="drawer-wrapper transition-all-variant" id="Drawer">
-        <div class="relative drawer w-fit-full h-fit-ful">
-          <header class="flex row justify-content-space-between">
-            <h1 class="title"></h1>
-            <button
-              class="no-border sm-icon cursor-pointer"
-              id="btnDrawerClose"
-            >
-              <i class="fas fa-times"></i>
-            </button>
-          </header>
-          <div class="drawer__body w-fit-full h-fit-full">
-            <div class="collapse-item"></div>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Express and Webpack App</title>
+  <link rel="shortcut icon" href="#" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but client doesn't work properly without JavaScript
+      enabled. Please enable it to continue.</strong>
+  </noscript>
+  <div id="app">
+
+    <!-- Loader -->
+    <div id="loader">
+      <div class="spinner-border text-red1" role="status"></div>
+      <div id="loadingText" class="loaderTextLigh">Loading !...</div>
+    </div>
+    <!-- Loader -->
+
+    <!-- Legend Button -->
+    <div id="topLeftButtons">
+      <button type="button" class="btn btn-success shadowed rounded btn-sm ml-1 mt-1" id="openLegend"
+        style="width: 70px;">Legend</button>
+    </div>
+    <!-- Legend Button -->
+
+    <!-- Print Button -->
+    <div id="bottomRightButtons">
+      <button type="button" class="btn btn-info shadowed rounded btn-sm mr-1 mb-1" id="openPrintmap"
+        style="width: 55px;">Print</button>
+    </div>
+    <!-- Print Button -->
+
+    <!-- Print Map For Mobile -->
+    <div class="modal fade dialogbox" id="mobilePrintMapDialog" data-backdrop="static" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 style="font-size: 25px;" class="modal-title">Print Map Dialog</h2>
+          </div>
+          <div class="modal-body" style="margin:0;">
+            Export Image Quality Options<br>
+            <div class="input-list">
+              <div class="custom-control custom-radio">
+                  <input type="radio" id="mobileDpi96" value="96" name="resulationType" class="custom-control-input">
+                  <label class="custom-control-label" for="mobileDpi96">Low Quality (96dpi)</label>
+              </div>
+              <div class="custom-control custom-radio">
+                  <input type="radio" id="mobileDpi150" value="150" checked name="resulationType" class="custom-control-input">
+                  <label class="custom-control-label" for="mobileDpi150">Normal Quality (150dpi)</label>
+              </div>
+              <div class="custom-control custom-radio">
+                  <input type="radio" id="mobileDpi300" value="300" name="resulationType" class="custom-control-input">
+                  <label class="custom-control-label" for="mobileDpi300">High Quality (300dpi)</label>
+              </div>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <div class="btn-inline">
+              <a href="#" class="btn btn-text-secondary" id="mobilePrintmapClose" data-dismiss="modal">CLOSE</a>
+              <a href="#" class="btn btn-text-primary" id="mobilePrint" data-dismiss="modal">Download</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </body>
+    <!-- Print Map For Mobile -->
+
+    <!-- Print Map For WEB -->
+    <div class="modal fade" id="webPrintMapDialog" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document" style="max-width: 800px !important; width: 800px !important;">
+        <div class="modal-content" style="max-width: 800px !important; width: 800px !important;">
+          <div class="modal-header" style="background-color: #03A9F4; padding: 10px 20px 10px 20px !important;">
+            <h5 class="modal-title" style="color: #fff; margin: 0;">Print Map Dialog</h5>
+            <button id="webPrintmapClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="padding: 20px; margin:0;">
+            <div class="row">
+
+              <div class="col-4">
+                <div class="card">
+                  <div class="card-header">
+                    Low Resulation (96dpi)
+                  </div>
+                  <div class="card-body" style="padding: 0 !important;">
+                    <img style="border-radius: 0px !important; width: 100%;" src="https://gislayer.com/assets/map96dpi.png" class="card-img-top" alt="image">
+                  </div>
+                  <div class="card-footer" style="padding: 0 !important; border: none;">
+                    <button type="button" id="printmap96" class="btn btn-success square btn-block">Download</button>
+                </div>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="card">
+                  <div class="card-header">
+                    Normal Resulation (150dpi)
+                  </div>
+                  <div class="card-body" style="padding: 0 !important;">
+                    <img style="border-radius: 0px !important; width: 100%;" src="https://gislayer.com/assets/map150dpi.png" class="card-img-top" alt="image">
+                  </div>
+                  <div class="card-footer" style="padding: 0 !important; border: none;">
+                    <button type="button" id="printmap150" class="btn btn-success square btn-block">Download</button>
+                </div>
+                </div>
+              </div>
+
+              <div class="col-4">
+                <div class="card">
+                  <div class="card-header">
+                    High Resulation (300dpi)
+                  </div>
+                  <div class="card-body" style="padding: 0 !important;">
+                    <img style="border-radius: 0px !important; width: 100%;" src="https://gislayer.com/assets/map300dpi.png" class="card-img-top" alt="image">
+                  </div>
+                  <div class="card-footer" style="padding: 0 !important; border: none;">
+                    <button type="button" id="printmap300" class="btn btn-success square btn-block">Download</button>
+                </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Print Map For WEB -->
+
+    <!-- Legend -->
+    <div class="modal fade panelbox panelbox-left" id="legend" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" id="legendDialog">
+          <div class="modal-body p-0">
+            <!-- profile box -->
+            <div class="profileBox">
+              <div class="image-wrapper" style="margin-right: 8px;">
+                <img
+                  src="https://www.globenewswire.com/news-release/logo/829467/0/829467.png?lastModified=10%2F07%2F2019%2007%3A45%3A15&size=2&v=2002888"
+                  alt="image" class="imaged rounded">
+              </div>
+              <div class="in">
+                <h3 style="color: #fff; margin: 0;">Seaborn</h2>
+                  <div class="text-muted">
+                    <ion-icon name="location"></ion-icon>
+                    Custom Map
+                  </div>
+              </div>
+              <a href="javascript:;" id="legendCloseButton" class="close-sidebar-button" data-dismiss="modal">
+                <ion-icon name="close"></ion-icon>
+              </a>
+            </div>
+            <!-- * profile box -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="modalBackground" style="display: none;" class="modal-backdrop fade"></div>
+  </div>
+</body>
+
 </html>
