@@ -1,3 +1,11 @@
+.iconRightMargin{
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  padding: 8px;
+  margin-right: 10px;
+}
+
 #bottomRightButtons{
   position: fixed;
   bottom: 0px;

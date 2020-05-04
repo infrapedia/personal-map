@@ -82,6 +82,7 @@ GL.openLegend = function(status){
     document.getElementById('legend').style.display='block';
     document.getElementById('legend').style.width=width+'px';
     document.getElementById('legendDialog').style.width=width+'px';
+    GL.populateLegen();
     //document.getElementById('modalBackground').className='modal-backdrop fade show';
     //document.getElementById('modalBackground').style.display='block';
   }else{
@@ -119,6 +120,104 @@ GL.openPrintMap = function(status){
       document.getElementById('modalBackground').style.display='none';
     }
   }
+}
+
+GL.legend = {
+  list:[],
+  addToList:function(layerID,LayerName,type,style){
+    var obj = {
+      id:layerID,
+      name:LayerName,
+      status:true,
+      style:style,
+      type:type
+    };
+    var control = GL.legend.list.find(function(l){if(l.id==layerID){return true;}});
+    if(control==undefined){
+      GL.legend.list.push(obj);
+      GL.legend.refreshTable();
+    }else{
+      alert('Already you have this layer.');
+    }
+  },
+  setActive:function(layerID,status){
+    GL.legend.list.map(function(l){
+      if(layerID==l.id){
+        l.status = status;
+        if(status==true){
+          GL.map.setLayoutProperty(layerID, 'visibility', 'visible');
+          GL.map.setLayoutProperty(layerID+'-label', 'visibility', 'visible');
+        }else{
+          GL.map.setLayoutProperty(layerID, 'visibility', 'none');
+          GL.map.setLayoutProperty(layerID+'-label', 'visibility', 'none');
+        }
+      }
+    });
+  },
+  refreshTable:function(){
+    var parent = document.getElementById('legendList');
+    parent.style.marginTop = '75px';
+    parent.innerHTML='';
+    GL.legend.list.map(function(layer){
+      var li = document.createElement('li');
+      var item = document.createElement('div');
+      item.className = 'item';
+      item.style.textTransform='capitalize';
+
+      var icon = document.createElement('div');
+      if(layer.type=='fill'){
+        icon.className='con-box bg-success iconRightMargin';
+        icon.innerHTML = '<ion-icon style="color:#fff;" name="grid-outline"></ion-icon>';
+      }
+      if(layer.type=='3D'){
+        icon.className='con-box bg-success iconRightMargin';
+        icon.innerHTML = '<ion-icon style="color:#fff;" name="cube-outline"></ion-icon>';
+      }
+      if(layer.type=='line'){
+        icon.className='con-box bg-warning iconRightMargin';
+        icon.innerHTML = '<ion-icon style="color:#fff;" name="analytics-outline"></ion-icon>';
+      }
+      if(layer.type=='circle'){
+        icon.className='con-box bg-info iconRightMargin';
+        icon.innerHTML = '<ion-icon style="color:#fff;" name="location-outline"></ion-icon>';
+      }
+
+      var inn = document.createElement('div');
+      inn.className='in';
+      inn.innerHTML = '<div> '+layer.name+' <div class="text-muted">'+layer.type+'</div> </div>';
+
+      var switchh = document.createElement('div');
+      switchh.className='custom-control custom-switch';
+      var input = document.createElement('input');
+      input.className='custom-control-input';
+      input.type='checkbox';
+      input.id='legendInput-'+layer.id;
+      input.dataset.id=layer.id;
+      if(layer.status==true){
+        input.
+        checked=true;
+      }
+      input.addEventListener('change',function(e){
+        var status = e.target.checked;
+        var layerId = e.target.dataset.id;
+        GL.legend.setActive(layerId,status);
+      });
+      var label = document.createElement('label');
+      label.className='custom-control-label';
+      label.htmlFor = 'legendInput-'+layer.id;
+      switchh.appendChild(input);
+      switchh.appendChild(label);
+      inn.appendChild(switchh);
+
+      item.appendChild(icon);
+      item.appendChild(inn);
+
+      li.appendChild(item);
+      parent.appendChild(li);
+      
+    });
+  }
+  
 }
 
 GL.getDate=function(){
@@ -516,6 +615,8 @@ GL.addLayers = function(){
               layerStyle = GL.styleMaker.default(paint.type,source.id,layerName);
             }
             GL.map.addLayer(layerStyle);
+            
+            GL.legend.addToList(layerName,layerName,paint.type,layerStyle);
 
             GL.map.on('mousemove', layerStyle.id, function(e) {
               GL.map.getCanvas().style.cursor = 'pointer';
@@ -548,7 +649,7 @@ GL.addLayers = function(){
           }
   
         });
-        //GL.legend.change();
+        
       }
       
     }
