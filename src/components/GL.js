@@ -82,7 +82,7 @@ GL.openLegend = function(status){
     document.getElementById('legend').style.display='block';
     document.getElementById('legend').style.width=width+'px';
     document.getElementById('legendDialog').style.width=width+'px';
-    GL.populateLegen();
+    GL.legend.refreshTable();
     //document.getElementById('modalBackground').className='modal-backdrop fade show';
     //document.getElementById('modalBackground').style.display='block';
   }else{
