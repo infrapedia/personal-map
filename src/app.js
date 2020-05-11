@@ -1,3 +1,4 @@
+import createElement from './helpers/createElement'
 import Drawer from './components/drawer'
 import Print from './components/print'
 import Map from './components/map'
@@ -16,7 +17,12 @@ class App {
   }
 
   initMap() {
-    const map = new Map({ layers: [] }).setup()
+    const id = 'map'
+    let map
+
+    this.createElemnt(createElement('div', { id }))
+    map = new Map({ wrapper: id, layers: [] }).setup()
+
     return map
   }
 
@@ -35,7 +41,7 @@ class App {
   init() {
     this.drawer = this.initDrawer()
     this.map = this.initMap()
-    this.print = this.initPrint()
+    this.print = this.initPrint();
     return this
   }
 }

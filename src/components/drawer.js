@@ -30,6 +30,18 @@ class Drawer {
       e.stopPropagation()
       GL.openLegend(false);
     })
+
+    document.getElementById('zoomToFeature').addEventListener('click', e => {
+      e.stopPropagation()
+      GL.zoomToFeature(GL.infoFeature);
+    })
+
+    document.getElementById('informationCloseButton').addEventListener('click', e => {
+      e.stopPropagation()
+      GL.openInfo(false);
+      var geojson={'type': 'FeatureCollection','features': []};
+      GL.addGeojsonToLayer('clicked',geojson);
+    })
   }
 
   setup() {

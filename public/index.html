@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Express and Webpack App</title>
+  <title>Searborn Custom Map</title>
   <link rel="shortcut icon" href="#" />
   <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.css" rel="stylesheet" />
   <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
@@ -17,7 +17,6 @@
       enabled. Please enable it to continue.</strong>
   </noscript>
   <div id="app">
-    <div id="map"/>
 
     <!-- Loader -->
     <div id="loader">
@@ -168,6 +167,39 @@
         </div>
       </div>
     </div>
+
+
+    <!-- Panel Right -->
+    <div class="modal fade panelbox panelbox-right" id="informationPanel" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content" id="informationDialog">
+              <div class="modal-header" style="background-color: #8BC34A;">
+                  <h4 class="modal-title" style="color: #fff;">Information Panel</h4>
+                  <a href="javascript:;" id="informationCloseButton" data-dismiss="modal" class="panel-close">
+                      <ion-icon name="close-outline"></ion-icon>
+                  </a>
+              </div>
+              <div class="modal-body">
+
+                <button type="button" id="zoomToFeature" class="btn btn-success btn-block">Zoom to Feature</button>
+
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>PROPERTY</th>
+                      <th>VALUE</th>
+                    </tr>
+                  </thead>
+                  <tbody id="informationList">
+
+                  </tbody>
+                </table>
+
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- * Panel Right -->
 
     <div id="modalBackground" style="display: none;" class="modal-backdrop fade"></div>
   </div>
