@@ -142,12 +142,12 @@ GL.openLegend = function(status){
 GL.openInfo = function(status){
   var width = GL.getWidth2();
   if(status){
-    document.getElementById('informationPanel').className='modal fade panelbox panelbox-right show';
+    document.getElementById('informationPanel').className='modal2 fade panelbox panelbox-right animated3 fadeInRight show';
     document.getElementById('informationPanel').style.display='block';
     document.getElementById('informationPanel').style.width=width+'px';
     document.getElementById('informationDialog').style.width=width+'px';
   }else{
-    document.getElementById('informationPanel').className='modal fade panelbox panelbox-right animated3 fadeOutRight';
+    document.getElementById('informationPanel').className='modal2 fade panelbox panelbox-right animated3 fadeOutRight show';
     document.getElementById('informationPanel').style.display='block';
   }
 }
@@ -699,7 +699,14 @@ GL.addLayers = function(){
             });
 
             GL.map.on('click', layerStyle.id, function(e) {
-              GL.addClickedFeature(layerStyle,e);
+              var features = GL.map.queryRenderedFeatures(e.point, {
+                layers: ['cables','cls','drawLine','drawPoint','facility','ixps']
+              });
+              if(features.length>0){
+                var obj = {features:features};
+                GL.addClickedFeature(layerStyle,obj);
+              }
+              
             });
 
           }
