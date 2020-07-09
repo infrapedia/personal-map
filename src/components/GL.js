@@ -32,7 +32,7 @@ GL.splitHostname = function() {
     if(parts.length==3){
       return parts[0];
     }else{
-      return 'alikilic';
+      return 'gislayer';
     }
 }
 
@@ -44,6 +44,22 @@ GL.setMap = function(map){
   });
   GL.subdomain = GL.splitHostname();
   GL.map=map;
+
+  //
+  var url = 'https://storage.googleapis.com/infrapediacom/clients/'+GL.subdomain+'_info.geojson';
+  fetch(url).then(function(response) {
+    return response.json();
+  }).then(function(data) {
+    var info = data[0];
+    var mail = info.saleEmail;
+    var phone = info.techPhone;
+    var name = info.subdomain;
+    var img = info.logos[0];
+    document.getElementById('info_mail').innerHTML=mail;
+    document.getElementById('info_phone').innerHTML=phone;
+    document.getElementById('info_company').innerHTML=name;
+    document.getElementById('info_img').src=img;
+  });
 
   GL.popup = new mapboxgl.Popup({closeOnClick: false});
   GL.infoFeature = {}; 
@@ -70,7 +86,7 @@ GL.setMap = function(map){
     if((fark>0 && fark<500) && (center1.lng==center2.lng && center1.lat==center2.lat)){
       GL.touch.startTime = Date.now();
       var features = GL.map.queryRenderedFeatures(e.point, {
-        layers: ['cables','cls','drawLine','drawPoint','facility','ixps']
+        layers: ['cables','cls','drawLine','drawPoint','drawPolygon','facility','ixps']
       });
       if(features.length>0){
         var feature = features[0];
@@ -80,7 +96,7 @@ GL.setMap = function(map){
     }
   });
 }
-
+// 
 GL.addControls = function(){
   GL.map.addControl(new mapboxgl.NavigationControl());
 }
@@ -377,6 +393,10 @@ GL.styleMaker = {
           obj2['line-color'] = ['get', columnName];
           break;
         }
+        case 'color':{
+          obj2['line-color'] = ['get', columnName];
+          break;
+        }
         case 'stroke-width':{
           obj2['line-width'] = ['get', columnName];
           break;
@@ -408,6 +428,33 @@ GL.styleMaker = {
       }
     };
     return obj2
+  },
+  fill:function(sourceId,layerId,obj){
+    var obj2 = {};
+    obj.map(function(columnName){
+      switch(columnName){
+        case 'stroke':{
+          obj2['fill-color'] = ['get', columnName];
+          obj2['fill-outline-color'] = ['get', columnName];
+          break;
+        }
+        case 'color':{
+          obj2['fill-color'] = ['get', columnName];
+          obj2['fill-outline-color'] = ['get', columnName];
+          break;
+        }
+        case 'fill-opacity':{
+          obj2['fill-opacity'] = ['get', columnName];
+          break;
+        }
+      }
+    });
+    return {
+      id:layerId,
+      type: 'fill',
+      source:sourceId,
+      paint:obj2
+    }
   },
   default:function(type,sourceId,layerId){
     var style = {};
@@ -485,6 +532,27 @@ GL.styleMaker = {
         }
         break;
       }
+      case 'fill':{
+        style =  {
+          id: id,
+          source: source,
+          type: 'symbol',
+          layout: {
+            'text-field': '{'+columnName+'}',
+            'symbol-placement': 'line',
+            'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+            'text-size': 12,
+            'text-justify': 'right',
+            'text-anchor': 'bottom',
+            'text-offset': [0, -0.1]
+          },
+          paint: {
+            'text-color': '#485E69'
+          },
+          filter: ['==', '$type', 'Polygon']
+        }
+        break;
+      }
       case 'circle':{
         style =  {
           id: id,
@@ -535,7 +603,7 @@ GL.addSource = function(){
     cable:{
       id:'cable',
       status:true,
-      source:'https://storage.googleapis.com/infrapediacom/clients/'+GL.subdomain+'_cables.geojson',
+      source:'https://cdn1.infrapedia.com/clients/'+GL.subdomain+'_cables.geojson',
       layers:['cables'],
       label:{
         cables:{
@@ -547,14 +615,14 @@ GL.addSource = function(){
         cables:{
           type:'line',
           status:true,
-          columns:['stroke','stroke-width','stroke-opacity']
+          columns:['stroke','stroke-width','stroke-opacity','color']
         }
       }
     },
     cls:{
       id:'cls',
       status:true,
-      source:'https://storage.googleapis.com/infrapediacom/clients/'+GL.subdomain+'_cls.geojson',
+      source:'https://cdn1.infrapedia.com/clients/'+GL.subdomain+'_cls.geojson',
       layers:['cls'],
       label:{
         cls:{
@@ -573,14 +641,18 @@ GL.addSource = function(){
     draw:{
       id:'draw',
       status:true,
-      source:'https://storage.googleapis.com/infrapediacom/clients/'+GL.subdomain+'_draw.geojson',
-      layers:['drawLine','drawPoint'],
+      source:'https://cdn1.infrapedia.com/clients/'+GL.subdomain+'_draw.geojson',
+      layers:['drawLine','drawPoint','drawPolygon'],
       label:{
         drawLine:{
           status:true,
           columnName:'name'
         },
         drawPoint:{
+          status:true,
+          columnName:'name'
+        },
+        drawPolygon:{
           status:true,
           columnName:'name'
         }
@@ -595,13 +667,18 @@ GL.addSource = function(){
           type:'line',
           status:true,
           columns:['stroke','stroke-width','stroke-opacity']
+        },
+        drawPolygon:{
+          type:'fill',
+          status:true,
+          columns:['stroke']
         }
       }
     },
     facilities:{
       id:'facilities',
       status:true,
-      source:'https://storage.googleapis.com/infrapediacom/clients/'+GL.subdomain+'_facilities.geojson',
+      source:'https://cdn1.infrapedia.com/clients/'+GL.subdomain+'_facilities.geojson',
       layers:['facility'],
       label:{
         facility:{
@@ -620,7 +697,7 @@ GL.addSource = function(){
     ixps:{
       id:'ixps',
       status:true,
-      source:'https://storage.googleapis.com/infrapediacom/clients/'+GL.subdomain+'_ixps.geojson',
+      source:'https://cdn1.infrapedia.com/clients/'+GL.subdomain+'_ixps.geojson',
       layers:['ixps'],
       label:{
         ixps:{
@@ -659,6 +736,10 @@ GL.addLayers = function(){
               switch(paint.type){
                 case 'line':{
                   layerStyle = GL.styleMaker.line(source.id,layerName,paint.columns);
+                  break;
+                }
+                case 'fill':{
+                  layerStyle = GL.styleMaker.fill(source.id,layerName,paint.columns);
                   break;
                 }
                 case 'circle':{
@@ -700,7 +781,7 @@ GL.addLayers = function(){
 
             GL.map.on('click', layerStyle.id, function(e) {
               var features = GL.map.queryRenderedFeatures(e.point, {
-                layers: ['cables','cls','drawLine','drawPoint','facility','ixps']
+                layers: ['cables','cls','drawLine','drawPoint','drawPolygon','facility','ixps']
               });
               if(features.length>0){
                 var obj = {features:features};
